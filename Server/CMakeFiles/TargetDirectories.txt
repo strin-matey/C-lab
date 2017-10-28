@@ -1,0 +1,4 @@
+/home/matteo/Scrivania/Progetto/Server/CMakeFiles/edit_cache.dir
+/home/matteo/Scrivania/Progetto/Server/CMakeFiles/server.dir
+/home/matteo/Scrivania/Progetto/Server/CMakeFiles/rebuild_cache.dir
+/home/matteo/Scrivania/Progetto/Server/CMakeFiles/i2c.dir

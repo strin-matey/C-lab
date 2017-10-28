@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/matteo/Scrivania/Progetto/Server/src/i2c.c
+stdio.h
+-
+stdint.h
+-
+stdlib.h
+-
+fcntl.h
+-
+unistd.h
+-
+string.h
+-
+errno.h
+-
+sys/ioctl.h
+-
+linux/i2c-dev.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+i2c.h
+/home/matteo/Scrivania/Progetto/Server/src/i2c.h
+
+/home/matteo/Scrivania/Progetto/Server/src/i2c.h
+

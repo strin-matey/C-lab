@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/server.dir/src/server.c.o  -o bin/server -rdynamic lib/libi2c.a 

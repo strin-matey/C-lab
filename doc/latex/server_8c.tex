@@ -1,0 +1,195 @@
+\hypertarget{server_8c}{}\section{Server/src/server.c File Reference}
+\label{server_8c}\index{Server/src/server.\+c@{Server/src/server.\+c}}
+
+
+Read data from M\+P\+U-\/6050 on the raspberry, make packets and send them to a client.  This server can send data either with T\+CP or U\+DP.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$ctype.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\+h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\+h$>$}\\*
+{\ttfamily \#include $<$netdb.\+h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\\*
+{\ttfamily \#include $<$sys/wait.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}i2c.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}server.\+h\char`\"{}}\\*
+Include dependency graph for server.\+c\+:
+% FIG 0
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structaccData}{acc\+Data}
+\begin{DoxyCompactList}\small\item\em Struct where data is stored before sending. Acceleration over x,y,z-\/axis. \end{DoxyCompactList}\item 
+struct \hyperlink{structgyroData}{gyro\+Data}
+\begin{DoxyCompactList}\small\item\em Struct where data is stored before sending. Gyroscope measurements over x,y,z-\/axis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries P\+O\+RT}~\char`\"{}3490\char`\"{}\hypertarget{server_8c_a614217d263be1fb1a5f76e2ff7be19a2}{}\label{server_8c_a614217d263be1fb1a5f76e2ff7be19a2}
+
+\item 
+\#define {\bfseries U\+D\+P\+\_\+\+P\+O\+RT}~\char`\"{}4950\char`\"{}\hypertarget{server_8c_a7342deb9bd9ebf195e550e2d8e7c38b4}{}\label{server_8c_a7342deb9bd9ebf195e550e2d8e7c38b4}
+
+\item 
+\#define {\bfseries B\+A\+C\+K\+L\+OG}~10\hypertarget{server_8c_aeefbbafa97642defe3ee6c3080b7d66f}{}\label{server_8c_aeefbbafa97642defe3ee6c3080b7d66f}
+
+\item 
+\#define {\bfseries S\+I\+Z\+E\+\_\+\+P\+A\+C\+K\+ET}~500\hypertarget{server_8c_ae93d74a9906fb01348a0d8daf97bade2}{}\label{server_8c_ae93d74a9906fb01348a0d8daf97bade2}
+
+\item 
+\#define {\bfseries D\+E\+B\+UG}\hypertarget{server_8c_ad72dbcf6d0153db1b8d8a58001feed83}{}\label{server_8c_ad72dbcf6d0153db1b8d8a58001feed83}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{server_8c_afeaa2fb1996e1ee2847ecf7206d18db2}{start\+M\+PU} ()
+\begin{DoxyCompactList}\small\item\em Set some important settings and disable sleep mode. Also prints an error if the number of the device isn\textquotesingle{}t right.  Set\+: \end{DoxyCompactList}\item 
+struct \hyperlink{structaccData}{acc\+Data} \hyperlink{server_8c_a98003308793800f66e91d2ea041fe5b3}{read\+Acc} ()
+\begin{DoxyCompactList}\small\item\em Get data from the registers and store it into one structure. \end{DoxyCompactList}\item 
+struct \hyperlink{structgyroData}{gyro\+Data} \hyperlink{server_8c_a1fd1e3eb67ef2aae81cdc9398329067d}{read\+Gyro} ()
+\begin{DoxyCompactList}\small\item\em Get data from the registers and store it into one structure. \end{DoxyCompactList}\item 
+void \hyperlink{server_8c_a4e749346cea55c3684da0e8760c705bd}{make\+Packet} (int16\+\_\+t packet\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Collects data and fills the array. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{server_8c_a294867ba9d7ff47e39d421134d8e12ab}{get\+\_\+in\+\_\+addr} (struct sockaddr $\ast$sa)
+\begin{DoxyCompactList}\small\item\em Get address from a node. \end{DoxyCompactList}\item 
+int \hyperlink{server_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Reads data from M\+P\+U-\/6050. It keeps sending data. The user is asked to use T\+CP or U\+DP. If user chooses T\+CP, he must fill informations about IP address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t {\bfseries buf} \mbox{[}100\mbox{]}\hypertarget{server_8c_a9a2bba766181828614d0fc6ec73e7dfa}{}\label{server_8c_a9a2bba766181828614d0fc6ec73e7dfa}
+
+\item 
+struct \hyperlink{structgyroData}{gyro\+Data} {\bfseries gyro\+Data}\hypertarget{server_8c_a47019566aeebc83cd05b9d6c90f6497e}{}\label{server_8c_a47019566aeebc83cd05b9d6c90f6497e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Read data from M\+P\+U-\/6050 on the raspberry, make packets and send them to a client.  This server can send data either with T\+CP or U\+DP. 
+
+\begin{DoxyAuthor}{Author}
+Matteo Stringher (\href{mailto:matteo.stringher@studenti.unipd.it}{\tt matteo.\+stringher@studenti.\+unipd.\+it}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxySince}{Since}
+1.\+0 
+\end{DoxySince}
+
+
+\subsection{Function Documentation}
+\index{server.\+c@{server.\+c}!get\+\_\+in\+\_\+addr@{get\+\_\+in\+\_\+addr}}
+\index{get\+\_\+in\+\_\+addr@{get\+\_\+in\+\_\+addr}!server.\+c@{server.\+c}}
+\subsubsection[{\texorpdfstring{get\+\_\+in\+\_\+addr(struct sockaddr $\ast$sa)}{get_in_addr(struct sockaddr *sa)}}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ get\+\_\+in\+\_\+addr (
+\begin{DoxyParamCaption}
+\item[{struct sockaddr $\ast$}]{sa}
+\end{DoxyParamCaption}
+)}\hypertarget{server_8c_a294867ba9d7ff47e39d421134d8e12ab}{}\label{server_8c_a294867ba9d7ff47e39d421134d8e12ab}
+
+
+Get address from a node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em struct} & sockaddr $\ast$sa\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the address 
+\end{DoxyReturn}
+\index{server.\+c@{server.\+c}!main@{main}}
+\index{main@{main}!server.\+c@{server.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$argv[])}{main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{server_8c_a0ddf1224851353fc92bfbff6f499fa97}{}\label{server_8c_a0ddf1224851353fc92bfbff6f499fa97}
+
+
+Reads data from M\+P\+U-\/6050. It keeps sending data. The user is asked to use T\+CP or U\+DP. If user chooses T\+CP, he must fill informations about IP address. 
+
+\begin{DoxyReturn}{Returns}
+Should return 0 
+\end{DoxyReturn}
+\index{server.\+c@{server.\+c}!make\+Packet@{make\+Packet}}
+\index{make\+Packet@{make\+Packet}!server.\+c@{server.\+c}}
+\subsubsection[{\texorpdfstring{make\+Packet(int16\+\_\+t packet[])}{makePacket(int16_t packet[])}}]{\setlength{\rightskip}{0pt plus 5cm}void make\+Packet (
+\begin{DoxyParamCaption}
+\item[{int16\+\_\+t}]{packet\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{server_8c_a4e749346cea55c3684da0e8760c705bd}{}\label{server_8c_a4e749346cea55c3684da0e8760c705bd}
+
+
+Collects data and fills the array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$packet} & Pointer where data is stored\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing 
+\end{DoxyReturn}
+\index{server.\+c@{server.\+c}!read\+Acc@{read\+Acc}}
+\index{read\+Acc@{read\+Acc}!server.\+c@{server.\+c}}
+\subsubsection[{\texorpdfstring{read\+Acc()}{readAcc()}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf acc\+Data} read\+Acc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{server_8c_a98003308793800f66e91d2ea041fe5b3}{}\label{server_8c_a98003308793800f66e91d2ea041fe5b3}
+
+
+Get data from the registers and store it into one structure. 
+
+\begin{DoxyReturn}{Returns}
+Structure \hyperlink{structaccData}{acc\+Data} with all the data 
+\end{DoxyReturn}
+\index{server.\+c@{server.\+c}!read\+Gyro@{read\+Gyro}}
+\index{read\+Gyro@{read\+Gyro}!server.\+c@{server.\+c}}
+\subsubsection[{\texorpdfstring{read\+Gyro()}{readGyro()}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf gyro\+Data} read\+Gyro (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{server_8c_a1fd1e3eb67ef2aae81cdc9398329067d}{}\label{server_8c_a1fd1e3eb67ef2aae81cdc9398329067d}
+
+
+Get data from the registers and store it into one structure. 
+
+\begin{DoxyReturn}{Returns}
+Structure \hyperlink{structgyroData}{gyro\+Data} with all the data 
+\end{DoxyReturn}
+\index{server.\+c@{server.\+c}!start\+M\+PU@{start\+M\+PU}}
+\index{start\+M\+PU@{start\+M\+PU}!server.\+c@{server.\+c}}
+\subsubsection[{\texorpdfstring{start\+M\+P\+U()}{startMPU()}}]{\setlength{\rightskip}{0pt plus 5cm}void start\+M\+PU (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{server_8c_afeaa2fb1996e1ee2847ecf7206d18db2}{}\label{server_8c_afeaa2fb1996e1ee2847ecf7206d18db2}
+
+
+Set some important settings and disable sleep mode. Also prints an error if the number of the device isn\textquotesingle{}t right.  Set\+: 
+
+
+\begin{DoxyItemize}
+\item source of the clock
+\item limit of the gyroscope to 250°/s
+\item limit of accelerometer to 2g
+\item sleep bit to 0
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+nothing 
+\end{DoxyReturn}

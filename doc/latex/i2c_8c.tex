@@ -1,0 +1,264 @@
+\hypertarget{i2c_8c}{}\section{Server/src/i2c.c File Reference}
+\label{i2c_8c}\index{Server/src/i2c.\+c@{Server/src/i2c.\+c}}
+
+
+Library with functions to reading an i2c device.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\\*
+{\ttfamily \#include $<$linux/i2c-\/dev.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/stat.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}i2c.\+h\char`\"{}}\\*
+Include dependency graph for i2c.\+c\+:
+% FIG 0
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries A\+D\+DR}~0x68\hypertarget{i2c_8c_ac9f31f726d2933782e2efda7136a25fd}{}\label{i2c_8c_ac9f31f726d2933782e2efda7136a25fd}
+
+\item 
+\#define {\bfseries I2C}~\char`\"{}/dev/i2c-\/1\char`\"{}\hypertarget{i2c_8c_a457a9aa93dbb216459873a30bdb4d84a}{}\label{i2c_8c_a457a9aa93dbb216459873a30bdb4d84a}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int8\+\_\+t \hyperlink{i2c_8c_a8acc520ae95197f0892b9357fa2aee7d}{read\+Registers} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t length, uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Read multiple registers. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{i2c_8c_a516bdfa7387e851e9ccbc93bc3935c87}{read\+Register} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Read single register. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{i2c_8c_a2d08b2d2f6c9edfb4b3da3d92e7cad2d}{read\+Bits} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t length, uint8\+\_\+t $\ast$data)
+\begin{DoxyCompactList}\small\item\em Read multiple bits from an 8-\/bit device register. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{i2c_8c_a69f2ceaccc4fe29905e51a77f5720e44}{read\+Bit} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t $\ast$data)
+\begin{DoxyCompactList}\small\item\em Read a single bit from an 8 bit register. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{i2c_8c_ac6c451e9e878f3931d2975a5dd130b7f}{write\+Registers} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t length, uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Write multiple bytes to an 8-\/bit device register. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{i2c_8c_a21904d7c315fd2c89d982492c9ba2a99}{write\+Register} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t data)
+\item 
+int8\+\_\+t \hyperlink{i2c_8c_aadacd71d5e1cedcbfdbe5c283a646b04}{write\+Bits} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t length, uint8\+\_\+t data)
+\begin{DoxyCompactList}\small\item\em Write multiple bits in an 8-\/bit device register.  Firstly, the register is read and modified, then overwritten. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{i2c_8c_a3f24fed9a297952e6a283485dc0d219e}{write\+Bit} (uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit, uint8\+\_\+t data)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Library with functions to reading an i2c device. 
+
+\begin{DoxyAuthor}{Author}
+Matteo Stringher (\href{mailto:matteo.stringher@studenti.unipd.it}{\tt matteo.\+stringher@studenti.\+unipd.\+it}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxySince}{Since}
+1.\+0 
+\end{DoxySince}
+
+
+\subsection{Function Documentation}
+\index{i2c.\+c@{i2c.\+c}!read\+Bit@{read\+Bit}}
+\index{read\+Bit@{read\+Bit}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{read\+Bit(uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t $\ast$data)}{readBit(uint8_t regAddr, uint8_t bitStart, uint8_t *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t read\+Bit (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t}]{bit\+Start, }
+\item[{uint8\+\_\+t $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_a69f2ceaccc4fe29905e51a77f5720e44}{}\label{i2c_8c_a69f2ceaccc4fe29905e51a77f5720e44}
+
+
+Read a single bit from an 8 bit register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & Register reg\+Addr to read from \\
+\hline
+{\em bit\+Start} & First bit position to read (0-\/7) \\
+\hline
+{\em data} & Container for right-\/aligned value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of read operation (true = success) 
+\end{DoxyReturn}
+\index{i2c.\+c@{i2c.\+c}!read\+Bits@{read\+Bits}}
+\index{read\+Bits@{read\+Bits}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{read\+Bits(uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t length, uint8\+\_\+t $\ast$data)}{readBits(uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t read\+Bits (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t}]{bit\+Start, }
+\item[{uint8\+\_\+t}]{length, }
+\item[{uint8\+\_\+t $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_a2d08b2d2f6c9edfb4b3da3d92e7cad2d}{}\label{i2c_8c_a2d08b2d2f6c9edfb4b3da3d92e7cad2d}
+
+
+Read multiple bits from an 8-\/bit device register. 
+
+7th bit is the most significative. Reading goes from the start bit to the right
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & Register reg\+Addr to read from \\
+\hline
+{\em bit\+Start} & First bit position to read (0-\/7) \\
+\hline
+{\em length} & Number of bits to read (not more than 8) \\
+\hline
+{\em data} & Container for right-\/aligned value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of read operation (true = success) 
+\end{DoxyReturn}
+\index{i2c.\+c@{i2c.\+c}!read\+Register@{read\+Register}}
+\index{read\+Register@{read\+Register}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{read\+Register(uint8\+\_\+t reg\+Addr, uint8\+\_\+t $\ast$buffer)}{readRegister(uint8_t regAddr, uint8_t *buffer)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t read\+Register (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_a516bdfa7387e851e9ccbc93bc3935c87}{}\label{i2c_8c_a516bdfa7387e851e9ccbc93bc3935c87}
+
+
+Read single register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & Register to read \\
+\hline
+{\em buffer} & Container for byte value read from device\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of read operation\+: 1 = 1 read register, 0 = error 
+\end{DoxyReturn}
+\index{i2c.\+c@{i2c.\+c}!read\+Registers@{read\+Registers}}
+\index{read\+Registers@{read\+Registers}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{read\+Registers(uint8\+\_\+t reg\+Addr, uint8\+\_\+t length, uint8\+\_\+t $\ast$buffer)}{readRegisters(uint8_t regAddr, uint8_t length, uint8_t *buffer)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t read\+Registers (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t}]{length, }
+\item[{uint8\+\_\+t $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_a8acc520ae95197f0892b9357fa2aee7d}{}\label{i2c_8c_a8acc520ae95197f0892b9357fa2aee7d}
+
+
+Read multiple registers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & First register to read \\
+\hline
+{\em length} & Number of registers to read \\
+\hline
+{\em buffer} & Container of data\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of bytes read 
+\end{DoxyReturn}
+\index{i2c.\+c@{i2c.\+c}!write\+Bit@{write\+Bit}}
+\index{write\+Bit@{write\+Bit}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{write\+Bit(uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit, uint8\+\_\+t data)}{writeBit(uint8_t regAddr, uint8_t bit, uint8_t data)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t write\+Bit (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t}]{bit, }
+\item[{uint8\+\_\+t}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_a3f24fed9a297952e6a283485dc0d219e}{}\label{i2c_8c_a3f24fed9a297952e6a283485dc0d219e}
+Edit a single bit in a 8 bit register
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & Register reg\+Addr to write to \\
+\hline
+{\em bit} & Bit to edit \\
+\hline
+{\em data} & Right-\/aligned value to write\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of operation (1 = success) 
+\end{DoxyReturn}
+\index{i2c.\+c@{i2c.\+c}!write\+Bits@{write\+Bits}}
+\index{write\+Bits@{write\+Bits}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{write\+Bits(uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t length, uint8\+\_\+t data)}{writeBits(uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t data)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t write\+Bits (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t}]{bit\+Start, }
+\item[{uint8\+\_\+t}]{length, }
+\item[{uint8\+\_\+t}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_aadacd71d5e1cedcbfdbe5c283a646b04}{}\label{i2c_8c_aadacd71d5e1cedcbfdbe5c283a646b04}
+
+
+Write multiple bits in an 8-\/bit device register.  Firstly, the register is read and modified, then overwritten. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & Register reg\+Addr to write to \\
+\hline
+{\em bit\+Start} & First bit position to write (0-\/7) \\
+\hline
+{\em length} & Number of bits to write \\
+\hline
+{\em data} & Right-\/aligned value to write\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of operation (1 = success) 
+\end{DoxyReturn}
+\index{i2c.\+c@{i2c.\+c}!write\+Register@{write\+Register}}
+\index{write\+Register@{write\+Register}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{write\+Register(uint8\+\_\+t reg\+Addr, uint8\+\_\+t data)}{writeRegister(uint8_t regAddr, uint8_t data)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t write\+Register (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_a21904d7c315fd2c89d982492c9ba2a99}{}\label{i2c_8c_a21904d7c315fd2c89d982492c9ba2a99}
+Write single byte to an 8-\/bit device register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & Register address to write to \\
+\hline
+{\em data} & New byte value to write\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of operation (1 = OK) 
+\end{DoxyReturn}
+\index{i2c.\+c@{i2c.\+c}!write\+Registers@{write\+Registers}}
+\index{write\+Registers@{write\+Registers}!i2c.\+c@{i2c.\+c}}
+\subsubsection[{\texorpdfstring{write\+Registers(uint8\+\_\+t reg\+Addr, uint8\+\_\+t length, uint8\+\_\+t $\ast$buffer)}{writeRegisters(uint8_t regAddr, uint8_t length, uint8_t *buffer)}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t write\+Registers (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{reg\+Addr, }
+\item[{uint8\+\_\+t}]{length, }
+\item[{uint8\+\_\+t $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}\hypertarget{i2c_8c_ac6c451e9e878f3931d2975a5dd130b7f}{}\label{i2c_8c_ac6c451e9e878f3931d2975a5dd130b7f}
+
+
+Write multiple bytes to an 8-\/bit device register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+Addr} & First register address to write to \\
+\hline
+{\em length} & Number of bytes to write \\
+\hline
+{\em buffer} & Buffer to copy new data from\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of written registers 
+\end{DoxyReturn}
